@@ -19,27 +19,17 @@ $end = '</body></html>';
 function tag($tag, $txt) {
    return "<{$tag}>" . $txt . "</{$tag}>";
 }
-
 class HelloController extends Controller
 {
   
-   public function index() {
-       global $head, $style, $body, $end;
-      
-       $html = $head . tag('title','Hello/Index') . $style . $body
-           . tag('h1','Index') . tag('p','this is Index page')
-           . '<a href="/hello/other">go to Other page</a>'
-           . $end;
-       return $html;
+   public function index()
+   {
+       return view('hello.index');
    }
 
-   public function other() {
-       global $head, $style, $body, $end;
-      
-       $html = $head . tag('title','Hello/Other') . $style . $body
-           . tag('h1','Other') . tag('p','this is Other page')
-           . $end;
-       return $html;
+   public function post(Request $request)
+   {
+       return view('hello.index', ['msg'=>$request->msg]);
    }
 
 }
