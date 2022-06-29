@@ -15,8 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
 Route::get('hello', 'HelloController@index');
-Route::get('hello/other', 'HelloController@other');
+Route::post('hello', 'HelloController@post');
 
 //実習用
 Route::get('', '');

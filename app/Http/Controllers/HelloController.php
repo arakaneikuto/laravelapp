@@ -11,6 +11,9 @@ $style = <<<EOF
 body {font-size:16pt; color:#999; }
 h1 { font-size:100pt; text-align:right; color:#eee;
    margin:-40px 0px -50px 0px; }
+
+
+   8888
 </style>
 EOF;
 $body = '</head><body>';
@@ -22,14 +25,23 @@ function tag($tag, $txt) {
 class HelloController extends Controller
 {
   
-   public function index()
+   public function index(Request $request)
    {
-       return view('hello.index');
+       return view('hello.index', ['msg'=>'フォームを入力：']);
    }
 
    public function post(Request $request)
    {
-       return view('hello.index', ['msg'=>$request->msg]);
+      $validator = Validator::make($request->all(), [
+          'name' => 'required',
+          'mail' => 'email',
+          'age' => 'numeric|between:0,150',
+      ]);
+      if ($validator->fails()) {
+          return redirect('/hello')
+                      ->withErrors($validator)
+                      ->withInput();
+      }
+      return view('hello.index', ['msg'=>'正しく入力されました！']);
    }
-
 }
